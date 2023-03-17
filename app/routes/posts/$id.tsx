@@ -1,19 +1,24 @@
-import type { LoaderArgs } from "@remix-run/cloudflare";
-import { json } from "@remix-run/cloudflare";
+import { json, LoaderArgs } from "@remix-run/cloudflare";
 import { Links, Meta, Outlet, Scripts, useLoaderData } from "@remix-run/react";
 
 export const loader = async ({ context, params }: LoaderArgs) => {
   const kv = context.KV as KVNamespace;
-  return await kv.get(`item-${params.id}`);
+  const data = await kv.get<{ title: string; body: string }>(
+    `item/${params.id}`,
+    {
+      type: "json",
+    }
+  );
+  return json(data);
 };
 
-export default function Product() {
-  const product = useLoaderData<typeof loader>();
+export default function () {
+  const post = useLoaderData<typeof loader>();
 
   return (
     <div>
-      <p>Product</p>
-      {product}
+      <h1>{post?.title}</h1>
+      <p>{post?.body}</p>
     </div>
   );
 }

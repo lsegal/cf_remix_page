@@ -1,5 +1,4 @@
 compatibility_date = "2022-04-05"
-compatibility_flags = ["streams_enable_constructors"]
 
 [[kv_namespaces]]
 id = "36ecbf531eeb440e84daeda4c4e6e905"
