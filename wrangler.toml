@@ -2,5 +2,5 @@ compatibility_date = "2022-04-05"
 compatibility_flags = ["streams_enable_constructors"]
 
 [[kv_namespaces]]
-id = "5d364c5ebfa041f7a3d80c95620d8975"
+id = "36ecbf531eeb440e84daeda4c4e6e905"
 binding = "KV"
