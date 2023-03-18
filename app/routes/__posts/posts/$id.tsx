@@ -1,6 +1,8 @@
+import { Button, Container, Typography } from "@mui/material";
 import { ActionArgs, json, LoaderArgs, redirect } from "@remix-run/cloudflare";
 import {
   Form,
+  Link,
   Links,
   Meta,
   Outlet,
@@ -52,13 +54,25 @@ export default function () {
   }
 
   return (
-    <div>
-      <h2>{post?.title}</h2>
-      <p>{post?.body}</p>
-      <Form method="delete">
-        <input type="submit" value="Delete" />
-      </Form>
-    </div>
+    <>
+      <Link to="/">Home</Link>
+      <Container
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "1rem",
+        }}
+      >
+        <Typography variant="h5">{post?.title}</Typography>
+        <Form method="delete">
+          <Button type="submit" variant="contained">
+            Delete
+          </Button>
+        </Form>
+      </Container>
+      <Container>{post?.body}</Container>
+    </>
   );
 }
 

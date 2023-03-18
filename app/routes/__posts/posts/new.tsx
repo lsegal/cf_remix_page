@@ -1,5 +1,7 @@
+import { Button } from "@mui/material";
 import { ActionFunction, json, redirect } from "@remix-run/cloudflare";
-import { Form } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
+import { motion } from "framer-motion";
 
 type ActionData = {
   errors?: {
@@ -33,12 +35,13 @@ export const action: ActionFunction = async ({ request, context }) => {
     metadata: { type: "json" },
   });
 
-  return redirect(`/posts/1`);
+  return redirect(`/posts/${slug}`);
 };
 
 export default function () {
   return (
     <div>
+      <Link to="/">Home</Link>
       <Form
         method="post"
         style={{
@@ -51,18 +54,9 @@ export default function () {
         <input type="text" name="title" />
         <label>Body</label>
         <textarea name="body" />
-        <button
-          type="submit"
-          style={{
-            padding: "8px 16px",
-            borderRadius: "4px",
-            border: "none",
-            backgroundColor: "blue",
-            color: "white",
-          }}
-        >
+        <Button type="submit" variant="contained">
           Create Post
-        </button>
+        </Button>
       </Form>
     </div>
   );
