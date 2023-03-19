@@ -1,6 +1,4 @@
-import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
-import { createTheme } from "@mui/system";
 import { MetaFunction } from "@remix-run/cloudflare";
 import {
   Links,
@@ -13,27 +11,23 @@ import {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Tic Tac Toe",
   viewport: "width=device-width,initial-scale=1",
 });
 
 export default function App() {
-  const theme = createTheme({
-    typography: {
-      fontFamily: [
-        "-apple-system",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-  });
+  const fonts = [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(",");
 
   return (
     <html lang="en">
@@ -41,32 +35,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body style={{ fontFamily: fonts }}>
         <Container>
-          <Typography variant="h3">My Remix Website</Typography>
+          <h1>Tic Tac Toe</h1>
           <Outlet />
         </Container>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
-      </body>
-    </html>
-  );
-}
-
-export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  return (
-    <html>
-      <head>
-        <title>Oh no!</title>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <h1>Oops!</h1>
-        <Outlet />
-        <Scripts />
       </body>
     </html>
   );
