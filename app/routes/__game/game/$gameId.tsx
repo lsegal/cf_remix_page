@@ -10,12 +10,16 @@ type GameData = {
   winner: string | null;
 };
 
-export async function loader({ context, params }: LoaderArgs) {
-  const kv = context.KV as KVNamespace;
+async function getGameData(kv: KVNamespace, gameId: string | undefined) {
+  if (!gameId) throw new Error("Game ID is required");
   return JSON.parse(
-    (await kv.get(`ttt/game/${params.gameId}`)) ||
+    (await kv.get(`ttt/game/${gameId}`)) ||
       JSON.stringify({ board: Array(9).fill(null), turn: "X" })
   ) as GameData;
+}
+
+export async function loader({ context, params }: LoaderArgs) {
+  return getGameData(context.KV as KVNamespace, params?.gameId);
 }
 
 export async function action({ context, params, request }: ActionArgs) {
@@ -45,9 +49,9 @@ export async function action({ context, params, request }: ActionArgs) {
 
   const formData = await request.formData();
   const kv = context.KV as KVNamespace;
-  const data = await loader({ context, params, request });
-  const pos = parseInt(formData.get("pos")?.toString() || "0");
-  if (data.winner || data.board[pos]) {
+  const data = await getGameData(kv, params.gameId);
+  const pos = parseInt(formData.get("pos")?.toString() || "-1");
+  if (pos >= 0 && (data.winner || data.board[pos])) {
     return redirect(`/game/${params.gameId}`);
   }
 
