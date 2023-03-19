@@ -52,12 +52,14 @@ export async function action({ context, params, request }: ActionArgs) {
   const data = await getGameData(kv, params.gameId);
   const pos = parseInt(formData.get("pos")?.toString() || "-1");
   if (pos >= 0 && (data.winner || data.board[pos])) {
+    console.log(`Invalid move ${pos} for ${params.gameId}:`, data);
     return redirect(`/game/${params.gameId}`);
   }
 
   data.board[pos] = data.turn;
   data.turn = data.turn === "X" ? "O" : "X";
   data.winner = calculateWinner(data.board);
+  console.log(`Current data for move ${pos} in ${params.gameId}:`, data);
   kv.put(`ttt/game/${params.gameId}`, JSON.stringify(data));
   return redirect(`/game/${params.gameId}`);
 }
