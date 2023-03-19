@@ -59,8 +59,8 @@ export async function action({ context, params, request }: ActionArgs) {
   data.board[pos] = data.turn;
   data.turn = data.turn === "X" ? "O" : "X";
   data.winner = calculateWinner(data.board);
+  await kv.put(`ttt/game/${params.gameId}`, JSON.stringify(data));
   console.log(`Current data for move ${pos} in ${params.gameId}:`, data);
-  kv.put(`ttt/game/${params.gameId}`, JSON.stringify(data));
   return redirect(`/game/${params.gameId}`);
 }
 
