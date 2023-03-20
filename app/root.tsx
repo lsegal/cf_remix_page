@@ -9,35 +9,28 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import styles from "./globals.css";
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Tic Tac Toe",
+  title: "Tic Tac Toe (Remix)",
   viewport: "width=device-width,initial-scale=1",
 });
 
-export default function App() {
-  const fonts = [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    '"Segoe UI"',
-    "Roboto",
-    '"Helvetica Neue"',
-    "Arial",
-    "sans-serif",
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(",");
+export const links = () => {
+  return [{ rel: "stylesheet", href: styles }];
+};
 
+export default function App() {
   return (
     <html lang="en">
       <head>
         <Meta />
         <Links />
       </head>
-      <body style={{ fontFamily: fonts }}>
+      <body>
         <Container>
-          <h1>Tic Tac Toe</h1>
+          <h1>Tic Tac Toe (Remix)</h1>
           <Outlet />
         </Container>
         <ScrollRestoration />
