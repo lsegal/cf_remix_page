@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material";
-import { Form, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 
 export default function () {
   const nav = useNavigate();
@@ -10,20 +10,25 @@ export default function () {
     nav(`/game/${game.value}`);
   };
 
+  const newGame = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    nav(`/game/${crypto.randomUUID()}`);
+  };
+
   return (
-    <div
+    <section
       style={{
         display: "flex",
         flexDirection: "column",
         gap: "1rem",
-        width: "200px",
+        width: "260px",
       }}
     >
-      <Form action="/game/new" method="post">
+      <form onSubmit={newGame}>
         <Button variant="outlined" type="submit">
           Create a New Game
         </Button>
-      </Form>
+      </form>
       <div style={{ marginBottom: "1rem" }}>- or -</div>
       <form
         onSubmit={go}
@@ -40,6 +45,6 @@ export default function () {
           Go
         </Button>
       </form>
-    </div>
+    </section>
   );
 }

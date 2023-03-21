@@ -1,4 +1,3 @@
-import Container from "@mui/material/Container";
 import { MetaFunction } from "@remix-run/cloudflare";
 import {
   Links,
@@ -9,8 +8,6 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
-import styles from "./globals.css";
-
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Tic Tac Toe (Remix)",
@@ -18,7 +15,7 @@ export const meta: MetaFunction = () => ({
 });
 
 export const links = () => {
-  return [{ rel: "stylesheet", href: styles }];
+  return [{ rel: "stylesheet", href: require("./globals.css") }];
 };
 
 export default function App() {
@@ -29,10 +26,8 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Container>
-          <h1>Tic Tac Toe (Remix)</h1>
-          <Outlet />
-        </Container>
+        <h1>Tic Tac Toe (Remix)</h1>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
