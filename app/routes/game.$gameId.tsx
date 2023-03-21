@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { ActionArgs, LoaderArgs } from "@remix-run/cloudflare";
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData, useRevalidator } from "@remix-run/react";
+import { useInterval } from "usehooks-ts";
 import Board from "~/components/Board";
 import { getGameData } from "~/models/GameData";
 
@@ -47,6 +48,14 @@ function calculateWinner(squares: string[]) {
 }
 
 export default function () {
+  const data = useLoaderData<typeof loader>();
+  const revalidator = useRevalidator();
+  useInterval(() => {
+    if (revalidator.state === "idle" && !data.winner) {
+      revalidator.revalidate();
+    }
+  }, 1000);
+
   return (
     <section
       style={{
@@ -57,7 +66,7 @@ export default function () {
       }}
     >
       <div>
-        <Board />
+        <Board data={data} />
       </div>
       <Link to="/" style={{ textDecoration: "none" }}>
         <Button variant="outlined">Wrong game?</Button>

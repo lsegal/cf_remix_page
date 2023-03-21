@@ -6,8 +6,6 @@ export type GameData = {
 
 export async function getGameData(kv: KVNamespace, gameId: string | undefined) {
   if (!gameId) throw new Error("Game ID is required");
-  return JSON.parse(
-    (await kv.get(`ttt/game/${gameId}`)) ||
-    JSON.stringify({ board: Array(9).fill(null), turn: "X" })
-  ) as GameData;
+  return (await kv.get<GameData>(`ttt/game/${gameId}`, { type: 'json' })) ||
+    { board: Array(9).fill(null), turn: "X", winner: null };
 }

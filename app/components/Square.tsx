@@ -1,15 +1,17 @@
 import { Button } from "@mui/material";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form } from "@remix-run/react";
 import { useState } from "react";
-import { GameData } from "../models/GameData";
 
-export default function ({ pos, value }: { pos: number; value: string }) {
+export default function ({
+  pos,
+  value,
+  turn,
+}: {
+  pos: number;
+  value: string;
+  turn: string;
+}) {
   const [mouseOver, setMouseOver] = useState(false);
-  const data = useLoaderData<GameData>();
-  if (!data) {
-    throw new Error("failed to load game");
-  }
-
   const isPlaceholder = mouseOver && !value;
   return (
     <Form method="post">
@@ -27,7 +29,7 @@ export default function ({ pos, value }: { pos: number; value: string }) {
         }}
       >
         <span style={{ opacity: isPlaceholder ? 0.3 : 1 }}>
-          {isPlaceholder ? data.turn : value}
+          {isPlaceholder ? turn : value}
         </span>
       </Button>
     </Form>
